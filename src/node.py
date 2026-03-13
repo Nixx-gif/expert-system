@@ -1,9 +1,10 @@
-class Node:
-    def __init__(self, type, left=None, right=None):
-        self.type = type
-        self.left = left
-        self.right = right
-            
+from dataclasses import dataclass
+@dataclass
 class Leaf:
-    def __init__(self, value):
-        self.value = value
+    value: str
+            
+@dataclass
+class Node:
+    kind: str
+    left: object = None
+    right: object = None
