@@ -1,5 +1,3 @@
-from node import Node, Leaf
-
 SYMBOLS = {
     "+": "AND",
     "|": "OR",
@@ -9,7 +7,29 @@ SYMBOLS = {
     ")": "RPAREN",
 }
 
+
 def tokenize(rule):
+    """
+    Convert a raw rule string into a list of typed tokens.
+
+    Recognized tokens:
+        - Single uppercase letters       → ("FACT", "A")
+        - Operator symbols (+, |, ^, !)  → ("AND"|"OR"|"XOR"|"NOT", symbol)
+        - Parentheses                    → ("LPAREN"|"RPAREN", symbol)
+        - Implication arrow =>           → ("IMPLIES", "=>")
+        - Biconditional arrow <=>        → ("IFF", "<=>")
+
+    Whitespace is silently ignored. Comments must be stripped before calling.
+
+    Args:
+        rule (str): A single rule string, e.g. "A + B => C".
+
+    Returns:
+        list[tuple[str, str]]: Ordered list of (token_type, token_value) pairs.
+
+    Raises:
+        ValueError: If an unrecognized character is encountered.
+    """
     tokens = []
     i = 0
     while i < len(rule):
